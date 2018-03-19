@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dwr PUBLIC "-//GetAhead Limited//DTD Direct Web Remoting 2.0//EN" "http://getahead.org/dwr/dwr20.dtd">
+<dwr>
+     <allow>
+         <create creator="spring" javascript="loginService">
+              <param name="beanName" value="loginService"></param>
+         </create>
+         
+         <create creator="spring" javascript="kechengService">
+              <param name="beanName" value="kechengService"></param>
+         </create>
+         <convert converter="bean" match="com.model.TKecheng">
+              <param name="include" value="kechengId,kechengName"></param>
+         </convert>
+         
+         
+         
+         <create creator="spring" javascript="tongyongService">
+              <param name="beanName" value="tongyongService"></param>
+         </create>
+         <convert converter="bean" match="com.model.TXuyuan">
+              <param name="include" value="xuyuanId,xuyuanName"></param>
+         </convert>
+         <convert converter="bean" match="com.model.TXibie">
+              <param name="include" value="xibieId,xibieName"></param>
+         </convert>
+         <convert converter="bean" match="com.model.TZhuanye">
+              <param name="include" value="zhuanyeId,zhuanyeName"></param>
+         </convert>
+         <convert converter="bean" match="com.model.TBanji">
+              <param name="include" value="banjiId,banjiName"></param>
+         </convert> 
+     </allow>
+</dwr>

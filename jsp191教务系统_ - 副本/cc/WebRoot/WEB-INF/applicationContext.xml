@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName"
+			value="net.sourceforge.jtds.jdbc.Driver">
+		</property>
+		<property name="url"
+			value="jdbc:jtds:sqlserver://localhost:1433;DatabaseName=db_teachWEB">
+		</property>
+		<property name="username" value="sa"></property>
+		<property name="password" value=""></property>
+		
+	</bean>
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource"></ref>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.SQLServerDialect
+				</prop>
+				<prop key="hibernate.hbm2ddl.auto">
+					update
+				</prop>
+			</props>
+		</property>
+		<property name="mappingResources">
+			<list>
+			<value>com/model/TAdmin.hbm.xml</value>
+			<value>com/model/TXuyuan.hbm.xml</value>
+			<value>com/model/TXibie.hbm.xml</value>
+			<value>com/model/TKecheng.hbm.xml</value>
+			<value>com/model/TZhuanye.hbm.xml</value>
+			<value>com/model/TTea.hbm.xml</value>
+			<value>com/model/TBanji.hbm.xml</value>
+			<value>com/model/TStu.hbm.xml</value>
+			<value>com/model/TChengji.hbm.xml</value>
+			<value>com/model/TGonggao.hbm.xml</value>
+			<value>com/model/TLiuyan.hbm.xml</value>
+			<value>com/model/TShiti.hbm.xml</value>
+			<value>com/model/TKebiao.hbm.xml</value></list>
+		</property>
+	</bean>
+	
+	
+	<bean id="TAdminDAO" class="com.dao.TAdminDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="loginService" class="com.service.loginService">
+		<property name="adminDAO">
+			<ref bean="TAdminDAO" />
+		</property>
+		<property name="stuDAO">
+			<ref bean="TStuDAO" />
+		</property>
+		<property name="teaDAO">
+			<ref bean="TTeaDAO" />
+		</property>
+	</bean>
+	<bean id="tongyongService" class="com.service.tongyongService">
+	    <property name="xuyuanDAO">
+			<ref bean="TXuyuanDAO" />
+		</property>
+		<property name="xibieDAO">
+			<ref bean="TXibieDAO" />
+		</property>
+		<property name="zhuanyeDAO">
+			<ref bean="TZhuanyeDAO" />
+		</property>
+		<property name="banjiDAO">
+			<ref bean="TBanjiDAO" />
+		</property>
+	</bean>
+	
+	
+	
+	
+	
+	
+	<bean id="TXuyuanDAO" class="com.dao.TXuyuanDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="xuyuanAction" class="com.action.xuyuanAction" scope="prototype">
+		<property name="xuyuanDAO">
+			<ref bean="TXuyuanDAO" />
+		</property>
+		<property name="xibieDAO">
+			<ref bean="TXibieDAO" />
+		</property>
+	</bean>
+	
+	
+	
+	
+	<bean id="TXibieDAO" class="com.dao.TXibieDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="xibieAction" class="com.action.xibieAction" scope="prototype">
+		<property name="xibieDAO">
+			<ref bean="TXibieDAO" />
+		</property>
+		<property name="zhuanyeDAO">
+			<ref bean="TZhuanyeDAO" />
+		</property>
+	</bean>
+	
+	
+	
+	
+	
+	<bean id="TZhuanyeDAO" class="com.dao.TZhuanyeDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"></ref>
+		</property>
+	</bean>
+	<bean id="zhuanyeAction" class="com.action.zhuanyeAction" scope="prototype">
+		<property name="xuyuanDAO">
+			<ref bean="TXuyuanDAO" />
+		</property>
+		<property name="xibieDAO">
+			<ref bean="TXibieDAO" />
+		</property>
+		<property name="zhuanyeDAO">
+			<ref bean="TZhuanyeDAO" />
+		</property>
+		<property name="banjiDAO">
+			<ref bean="TBanjiDAO" />
+		</property>
+	</bean>
+	
+	
+	
+	
+	
+	<bean id="TTeaDAO" class="com.dao.TTeaDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"></ref>
+		</property>
+	</bean>
+	<bean id="teaAction" class="com.action.teaAction" scope="prototype">
+		<property name="xuyuanDAO">
+			<ref bean="TXuyuanDAO" />
+		</property>
+		<property name="xibieDAO">
+			<ref bean="TXibieDAO" />
+		</property>
+		<property name="teaDAO">
+			<ref bean="TTeaDAO" />
+		</property>
+		<property name="kechengDAO">
+			<ref bean="TKechengDAO" />
+		</property>
+	</bean>
+	
+	
+	
+	
+	<bean id="TBanjiDAO" class="com.dao.TBanjiDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"></ref>
+		</property>
+	</bean>
+	<bean id="banjiAction" class="com.action.banjiAction" scope="prototype">
+		<property name="xuyuanDAO">
+			<ref bean="TXuyuanDAO" />
+		</property>
+		<property name="xibieDAO">
+			<ref bean="TXibieDAO" />
+		</property>
+		<property name="zhuanyeDAO">
+			<ref bean="TZhuanyeDAO" />
+		</property>
+		<property name="banjiDAO">
+			<ref bean="TBanjiDAO" />
+		</property>
+		<property name="stuDAO">
+			<ref bean="TStuDAO" />
+		</property>
+	</bean>
+	
+	
+	
+	
+	<bean id="TStuDAO" class="com.dao.TStuDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"></ref>
+		</property>
+	</bean>
+	<bean id="stuAction" class="com.action.stuAction" scope="prototype">
+		<property name="xuyuanDAO">
+			<ref bean="TXuyuanDAO" />
+		</property>
+		<property name="xibieDAO">
+			<ref bean="TXibieDAO" />
+		</property>
+		<property name="zhuanyeDAO">
+			<ref bean="TZhuanyeDAO" />
+		</property>
+		<property name="banjiDAO">
+			<ref bean="TBanjiDAO" />
+		</property>
+		<property name="stuDAO">
+			<ref bean="TStuDAO" />
+		</property>
+	</bean>
+	
+	
+	
+	
+	
+	
+	
+	<bean id="TKechengDAO" class="com.dao.TKechengDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="kechengService" class="com.service.kechengService">
+		<property name="kechengDAO">
+			<ref bean="TKechengDAO" />
+		</property>
+	</bean>
+	<bean id="kechengAction" class="com.action.kechengAction" scope="prototype">
+		<property name="kechengDAO">
+			<ref bean="TKechengDAO" />
+		</property>
+	</bean>
+	<bean id="TChengjiDAO" class="com.dao.TChengjiDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"></ref>
+		</property>
+	</bean>
+	<bean id="chengjiAction" class="com.action.chengjiAction" scope="prototype">
+		<property name="xuyuanDAO">
+			<ref bean="TXuyuanDAO" />
+		</property>
+		<property name="xibieDAO">
+			<ref bean="TXibieDAO" />
+		</property>
+		<property name="zhuanyeDAO">
+			<ref bean="TZhuanyeDAO" />
+		</property>
+		<property name="banjiDAO">
+			<ref bean="TBanjiDAO" />
+		</property>
+		<property name="stuDAO">
+			<ref bean="TStuDAO" />
+		</property>
+		<property name="chengjiDAO">
+			<ref bean="TChengjiDAO" />
+		</property>
+		<property name="kechengDAO">
+			<ref bean="TKechengDAO" />
+		</property>
+	</bean>
+	
+	
+	
+	
+	
+	
+	
+	<bean id="TGonggaoDAO" class="com.dao.TGonggaoDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"></ref>
+		</property>
+	</bean>
+	<bean id="gonggaoAction" class="com.action.gonggaoAction" scope="prototype">
+		<property name="gonggaoDAO">
+			<ref bean="TGonggaoDAO" />
+		</property>
+	</bean>
+	
+	
+	
+	
+	
+	<bean id="TLiuyanDAO" class="com.dao.TLiuyanDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="liuyanAction" class="com.action.liuyanAction" scope="prototype">
+		<property name="liuyanDAO">
+			<ref bean="TLiuyanDAO" />
+		</property>
+	</bean>
+	
+	
+	<bean id="TShitiDAO" class="com.dao.TShitiDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="shitiAction" class="com.action.shitiAction" scope="prototype">
+		<property name="shitiDAO">
+			<ref bean="TShitiDAO" />
+		</property>
+	</bean>
+	
+	
+	<bean id="TKebiaoDAO" class="com.dao.TKebiaoDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="kebiaoAction" class="com.action.kebiaoAction" scope="prototype">
+		<property name="kebiaoDAO">
+			<ref bean="TKebiaoDAO" />
+		</property>
+		<property name="kechengDAO">
+			<ref bean="TKechengDAO" />
+		</property>
+		<property name="teaDAO">
+			<ref bean="TTeaDAO" />
+		</property>
+	</bean>
+	
+	</beans>
